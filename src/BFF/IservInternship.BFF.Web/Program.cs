@@ -1,3 +1,6 @@
+using IservInternship.BFF.Web.Extensions;
+using IservInternship.BFF.Web.Options;
+using System.Globalization;
 
 namespace IservInternship.BFF.Web
 {
@@ -5,26 +8,32 @@ namespace IservInternship.BFF.Web
     {
         public static void Main(string[] args)
         {
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("ru-RU");
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Logging.ClearProviders();
+                builder.Logging.AddConsole();
+            }
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+            builder
+                .ConfigureSettings()
+                .ConfigureControllers()
+                .ConfigureAuth()
+                .ConfigureServices();
 
             var app = builder.Build();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseOpenApi();
+                app.UseSwaggerUi();
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
-
 
             app.MapControllers();
 
