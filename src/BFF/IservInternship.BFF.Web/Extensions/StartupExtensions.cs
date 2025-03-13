@@ -1,4 +1,5 @@
-﻿using IservInternship.BFF.Web.Options;
+﻿using Asp.Versioning;
+using IservInternship.BFF.Web.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -96,7 +97,7 @@ public static class StartupExtensions
                                     var roles = document.RootElement
                                         .GetProperty("roles")
                                         .EnumerateArray()
-                                        .Select(token => token.GetString());
+                                        .Select(token => token.GetString() ?? string.Empty);
 
                                     // Добавляем каждую роль как отдельный Claim с типом ClaimTypes.Role
                                     foreach (var role in roles)
@@ -124,6 +125,19 @@ public static class StartupExtensions
     {
         builder.Services.AddOpenApi();
         // builder.Services.AddAutoMapper();
+
+        builder.Services
+            .AddApiVersioning(options =>
+            {
+                options.AssumeDefaultVersionWhenUnspecified = true;
+                options.DefaultApiVersion = new ApiVersion(1, 0);
+                options.ReportApiVersions = true;
+            })
+            .AddApiExplorer(options =>
+            {
+                options.GroupNameFormat = "'v'VVV";
+                options.SubstituteApiVersionInUrl = true;
+            });
 
         builder.Services.AddOpenApiDocument(doc =>
         {
