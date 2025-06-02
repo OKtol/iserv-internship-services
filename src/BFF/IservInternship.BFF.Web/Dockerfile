@@ -14,7 +14,11 @@ WORKDIR /src
 VOLUME ["/root/.nuget/packages"]
 COPY ["BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj", "BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj"]
 RUN dotnet restore "BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj"
+
 COPY ["BFF/IservInternship.BFF.Web/", "BFF/IservInternship.BFF.Web/"]
+COPY ["Account/IservInternship.Account.Infrastructure/", "Account/IservInternship.Account.Infrastructure/"]
+COPY ["Account/IservInternship.Account.Services/", "Account/IservInternship.Account.Services/"]
+COPY ["Shared/", "Shared/"]
 RUN dotnet build "BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
