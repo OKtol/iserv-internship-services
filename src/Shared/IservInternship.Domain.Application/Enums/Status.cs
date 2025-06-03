@@ -1,4 +1,4 @@
-﻿namespace IservInternship.Domain.Account.Enums;
+﻿namespace IservInternship.Domain.Application.Enums;
 
 public enum Status
 {

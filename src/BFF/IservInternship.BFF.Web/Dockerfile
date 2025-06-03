@@ -16,8 +16,12 @@ COPY ["BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj", "BFF/IservIn
 RUN dotnet restore "BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj"
 
 COPY ["BFF/IservInternship.BFF.Web/", "BFF/IservInternship.BFF.Web/"]
+
 COPY ["Account/IservInternship.Account.Infrastructure/", "Account/IservInternship.Account.Infrastructure/"]
 COPY ["Account/IservInternship.Account.Services/", "Account/IservInternship.Account.Services/"]
+
+COPY ["Application/IservInternship.Application.Infrastructure/", "Application/IservInternship.Application.Infrastructure/"]
+COPY ["Application/IservInternship.Application.Services/", "Application/IservInternship.Application.Services/"]
 COPY ["Shared/", "Shared/"]
 RUN dotnet build "BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

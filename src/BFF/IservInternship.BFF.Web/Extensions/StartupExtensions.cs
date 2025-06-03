@@ -1,5 +1,9 @@
 ﻿using Asp.Versioning;
+using IservInternship.Application.Services;
+using IservInternship.BFF.Web.Mappings;
 using IservInternship.BFF.Web.Options;
+using IservInternship.Commons.Configuration;
+using IservInternship.Domain.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -20,6 +24,11 @@ public static class StartupExtensions
             .Bind(configuration.GetSection(nameof(KeycloackAuthOptions)))
             .ValidateDataAnnotations()
             .ValidateOnStart();
+
+        builder.Services.AddOptions<DatabaseOptions>()
+                .Bind(builder.Configuration.GetSection(nameof(DatabaseOptions)))
+                .ValidateDataAnnotations()
+                .ValidateOnStart();
 
         return builder;
 
@@ -124,7 +133,11 @@ public static class StartupExtensions
     public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddOpenApi();
-        // builder.Services.AddAutoMapper();
+        builder.Services.AddAutoMapper(typeof(ApplicationProfile));
+
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddTransient<IUserContextService, ProductionUserContextService>();
+        builder.Services.AddTransient<ApplicationService>();
 
         builder.Services
             .AddApiVersioning(options =>

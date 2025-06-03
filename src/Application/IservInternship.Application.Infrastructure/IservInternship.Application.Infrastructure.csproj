@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Shared\IservInternship.Domain.Account\IservInternship.Domain.Account.csproj" />
+    <ProjectReference Include="..\..\Shared\IservInternship.Domain.Application\IservInternship.Domain.Application.csproj" />
   </ItemGroup>
 
 </Project>

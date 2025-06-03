@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -13,10 +13,19 @@
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
     <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
-    <PackageReference Include="NSwag.AspNetCore" Version="14.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+    <PackageReference Include="NSwag.AspNetCore" Version="14.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Account\IservInternship.Account.Infrastructure\IservInternship.Account.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Application\IservInternship.Application.Infrastructure\IservInternship.Application.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Application\IservInternship.Application.Services\IservInternship.Application.Services.csproj" />
+    <ProjectReference Include="..\..\Shared\IservInternship.Commons\IservInternship.Commons.csproj" />
+    <ProjectReference Include="..\..\Shared\IservInternship.Domain\IservInternship.Domain.csproj" />
   </ItemGroup>
 
 </Project>

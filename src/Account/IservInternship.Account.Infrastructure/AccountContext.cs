@@ -8,11 +8,8 @@ public class AccountContext : DbContext
 {
     public virtual DbSet<ProfileEntity> Profiles => Set<ProfileEntity>();
 
-    public virtual DbSet<AnswerEntity> Answers => Set<AnswerEntity>();
-
     public AccountContext()
     {
-
     }
 
     public AccountContext(DbContextOptions<AccountContext> options)
