@@ -7,7 +7,7 @@ namespace IservInternship.Application.Infrastructure;
 public class ApplicationContext : DbContext
 {
     public virtual DbSet<ApplicationEntity> Applications => Set<ApplicationEntity>();
-    public virtual DbSet<AnswerEntity> Answers => Set<AnswerEntity>();
+    public virtual DbSet<JobEntity> Jobs => Set<JobEntity>();
 
     public ApplicationContext()
     {

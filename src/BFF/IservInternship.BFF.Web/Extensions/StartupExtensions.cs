@@ -138,6 +138,7 @@ public static class StartupExtensions
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddTransient<IUserContextService, ProductionUserContextService>();
         builder.Services.AddTransient<ApplicationService>();
+        builder.Services.AddTransient<JobService>();
 
         builder.Services
             .AddApiVersioning(options =>

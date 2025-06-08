@@ -2,7 +2,7 @@
 
 namespace IservInternship.BFF.Web.Models;
 
-public class ApplicationDto
+public class ApplicationDetailsDto
 {
     public Guid Id { get; set; }
 
@@ -14,9 +14,17 @@ public class ApplicationDto
 
     public required string Email { get; set; }
 
-    public Status Status { get; set; }
+    public required string PhoneNumber { get; set; }
+
+    public string AboutMe { get; set; } = string.Empty;
+
+    public required Status Status { get; set; }
+
+    public string Solution { get; set; } = string.Empty;
 
     public Status VerificationStatus { get; set; }
+
+    public string Answer { get; set; } = string.Empty;
 
     public Status SolutionStatus { get; set; }
 }

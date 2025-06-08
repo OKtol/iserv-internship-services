@@ -1,6 +1,3 @@
-@IservInternship.BFF.Web_HostAddress = http://localhost:5286
-
-GET {{IservInternship.BFF.Web_HostAddress}}/weatherforecast/
-Accept: application/json
+@IservInternship.BFF.Web_HostAddress = http://localhost:9991
 
 ###

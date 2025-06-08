@@ -8,6 +8,8 @@ public class ApplicationEntity
 
     public Guid UserUid { get; set; }
 
+    public int JobId { get; set; }
+
     public required string FirstName { get; set; }
 
     public required string LastName { get; set; }
@@ -16,9 +18,17 @@ public class ApplicationEntity
 
     public required string PhoneNumber { get; set; }
 
-    public string AboutMe { get; set; } = null!;
+    public string AboutMe { get; set; } = string.Empty;
 
-    public required Status Status { get; set; }
+    public Status Status { get; set; }
 
-    public AnswerEntity Answer { get; set; } = null!;
+    public string Solution { get; set; } = string.Empty;
+    
+    public Status VerificationStatus { get; set; }
+
+    public string Answer { get; set; } = string.Empty;
+
+    public Status SolutionStatus { get; set; }
+
+    public JobEntity Job { get; set; } = null!;
 }
