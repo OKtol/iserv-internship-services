@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using IservInternship.Application.Services;
+using IservInternship.BFF.Web.Filters;
 using IservInternship.BFF.Web.Mappings;
 using IservInternship.BFF.Web.Options;
 using IservInternship.Commons.Configuration;
@@ -49,7 +50,7 @@ public static class StartupExtensions
     {
         builder.Services.AddControllers(options =>
         {
-            // filters
+            options.Filters.Add<HttpResponseExceptionFilter>();
         });
 
         return builder;

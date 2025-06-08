@@ -1,4 +1,5 @@
 ﻿using IservInternship.Application.Infrastructure;
+using IservInternship.Commons.Exceptions;
 using IservInternship.Domain.Application.Entities;
 using IservInternship.Domain.Application.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ public class ApplicationService(ApplicationContext context)
         return context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Application is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Application is not exist with Id = {id}");
     }
 
     public async Task<ApplicationEntity> UpdateApplicationStatusAsync(Guid id, Status status)
@@ -27,7 +28,7 @@ public class ApplicationService(ApplicationContext context)
         var existingEntity = await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Application is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
         existingEntity.Status = status;
 
@@ -40,7 +41,7 @@ public class ApplicationService(ApplicationContext context)
         var existingEntity = await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Application is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
         existingEntity.SolutionStatus = status;
 
@@ -53,7 +54,7 @@ public class ApplicationService(ApplicationContext context)
         return context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.UserUid == userUid)
-            ?? throw new ArgumentException($"Application is not exist with userUid = {userUid}");
+            ?? throw new NotFoundException($"Application is not exist with userUid = {userUid}");
     }
 
     public async Task<ApplicationEntity> AddApplicationAsync(ApplicationEntity entity)
@@ -63,7 +64,7 @@ public class ApplicationService(ApplicationContext context)
 
         entry.Entity.Job = await context.Jobs
             .SingleOrDefaultAsync(x => x.Id == entity.JobId)
-            ?? throw new ArgumentException($"Job is not exist with Id = {entity.JobId}");
+            ?? throw new NotFoundException($"Job is not exist with Id = {entity.JobId}");
         return entry.Entity;
     }
 
@@ -72,7 +73,7 @@ public class ApplicationService(ApplicationContext context)
         var existingEntity = await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Application is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
         existingEntity.JobId = entity.JobId;
         existingEntity.FirstName = entity.FirstName;
@@ -89,7 +90,7 @@ public class ApplicationService(ApplicationContext context)
         var existingEntity = await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Application is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
         existingEntity.Solution = solution;
 
@@ -102,7 +103,7 @@ public class ApplicationService(ApplicationContext context)
         var existingEntity = await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Application is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
         existingEntity.Answer = answer;
 
@@ -115,7 +116,7 @@ public class ApplicationService(ApplicationContext context)
         var existingEntity = await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Application is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
         await context.Applications
             .Where(x => x.Id == id)

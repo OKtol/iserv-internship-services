@@ -1,4 +1,5 @@
 ﻿using IservInternship.Application.Infrastructure;
+using IservInternship.Commons.Exceptions;
 using IservInternship.Domain.Application.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,7 +21,7 @@ public class JobService(ApplicationContext context)
     {
         var existingEntity = await context.Jobs
             .SingleOrDefaultAsync(x => x.Id == id)
-            ?? throw new ArgumentException($"Job is not exist with Id = {id}");
+            ?? throw new NotFoundException($"Job is not exist with Id = {id}");
 
         existingEntity.IsVisible = isVisible;
 

@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\IservInternship.Commons\IservInternship.Commons.csproj" />
     <ProjectReference Include="..\..\Shared\IservInternship.Domain.Application\IservInternship.Domain.Application.csproj" />
     <ProjectReference Include="..\IservInternship.Application.Infrastructure\IservInternship.Application.Infrastructure.csproj" />
   </ItemGroup>
