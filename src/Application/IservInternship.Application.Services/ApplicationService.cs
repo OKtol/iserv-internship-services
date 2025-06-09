@@ -15,9 +15,9 @@ public class ApplicationService(ApplicationContext context)
             .ToArrayAsync();
     }
 
-    public Task<ApplicationEntity?> GetApplicationByIdAsync(Guid id)
+    public async Task<ApplicationEntity> GetApplicationByIdAsync(Guid id)
     {
-        return context.Applications
+        return await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
             ?? throw new NotFoundException($"Application is not exist with Id = {id}");
@@ -49,9 +49,9 @@ public class ApplicationService(ApplicationContext context)
         return existingEntity;
     }
 
-    public Task<ApplicationEntity?> GetApplicationByUserUidAsync(Guid userUid)
+    public async Task<ApplicationEntity> GetApplicationByUserUidAsync(Guid userUid)
     {
-        return context.Applications
+        return await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.UserUid == userUid)
             ?? throw new NotFoundException($"Application is not exist with userUid = {userUid}");
