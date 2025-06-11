@@ -33,6 +33,7 @@ public class JobController(
     }
 
     [HttpPatch("{id:int}")]
+    [Authorize(Policy = "AdminOnly")]
     public async Task<JobDetailsDto> PatchJobVisibility(
         int id, [FromBody] bool isVisible)
     {
