@@ -65,17 +65,30 @@ public class ApplicationController(
     public async Task<ApplicationDetailsDto> AddApplication([FromBody] CreateApplicationRequest request)
     {
         var userUid = Guid.Parse(GetRetrieveUserIdentificator()!);
-        var newEntity = mapper.Map<ApplicationEntity>(request);
-        newEntity.UserUid = userUid;
 
-        var entity = await applicationService.AddApplicationAsync(newEntity);
+        var entity = await applicationService.AddApplicationAsync(
+            userUid,
+            request.Email,
+            request.JobId,
+            request.FirstName,
+            request.LastName,
+            request.PhoneNumber,
+            request.AboutMe
+            );
         return mapper.Map<ApplicationDetailsDto>(entity);
     }
 
     [HttpPatch("{id:guid}")]
     public async Task<ApplicationDetailsDto> PatchApplication(Guid id, [FromBody] PatchApplicationRequest request)
     {
-        var entity = await applicationService.UpdateApplicationAsync(id, mapper.Map<ApplicationEntity>(request));
+        var entity = await applicationService.UpdateApplicationAsync(
+            id,
+            request.JobId,
+            request.FirstName,
+            request.LastName,
+            request.PhoneNumber,
+            request.AboutMe
+            );
         return mapper.Map<ApplicationDetailsDto>(entity);
     }
 

@@ -57,8 +57,26 @@ public class ApplicationService(ApplicationContext context)
             ?? throw new NotFoundException($"Application is not exist with userUid = {userUid}");
     }
 
-    public async Task<ApplicationEntity> AddApplicationAsync(ApplicationEntity entity)
+    public async Task<ApplicationEntity> AddApplicationAsync(
+        Guid userUid,
+        string email,
+        int jobId,
+        string firstName,
+        string lastName,
+        string phoneNumber,
+        string aboutMe
+        )
     {
+        var entity = new ApplicationEntity
+        {
+            UserUid = userUid,
+            Email = email,
+            JobId = jobId,
+            FirstName = firstName,
+            LastName = lastName,
+            PhoneNumber = phoneNumber,
+            AboutMe = aboutMe
+        };
         var entry = await context.Applications.AddAsync(entity);
         await context.SaveChangesAsync();
 
@@ -68,18 +86,25 @@ public class ApplicationService(ApplicationContext context)
         return entry.Entity;
     }
 
-    public async Task<ApplicationEntity> UpdateApplicationAsync(Guid id, ApplicationEntity entity)
+    public async Task<ApplicationEntity> UpdateApplicationAsync(
+        Guid id, 
+        int jobId,
+        string firstName,
+        string lastName,
+        string phoneNumber,
+        string aboutMe
+        )
     {
         var existingEntity = await context.Applications
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
             ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
-        existingEntity.JobId = entity.JobId;
-        existingEntity.FirstName = entity.FirstName;
-        existingEntity.LastName = entity.LastName;
-        existingEntity.PhoneNumber = entity.PhoneNumber;
-        existingEntity.AboutMe = entity.AboutMe;
+        existingEntity.JobId = jobId;
+        existingEntity.FirstName = firstName;
+        existingEntity.LastName = lastName;
+        existingEntity.PhoneNumber = phoneNumber;
+        existingEntity.AboutMe = aboutMe;
 
         await context.SaveChangesAsync();
         return existingEntity;
