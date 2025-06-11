@@ -32,12 +32,37 @@ public class JobController(
         return mapper.Map<JobDto[]>(entities);
     }
 
-    [HttpPatch("{id:int}")]
+    [HttpPatch("{id:int}/visible")]
     [Authorize(Policy = "AdminOnly")]
     public async Task<JobDetailsDto> PatchJobVisibility(
         int id, [FromBody] bool isVisible)
     {
         var entity = await jobService.UpdateJobVisibilityAsync(id, isVisible);
+        return mapper.Map<JobDetailsDto>(entity);
+    }
+
+    [HttpPatch("{id:int}")]
+    [Authorize(Policy = "AdminOnly")]
+    public async Task<JobDetailsDto> PatchJobTitle(
+        int id, [FromBody] string title)
+    {
+        var entity = await jobService.UpdateJobTitleAsync(id, title);
+        return mapper.Map<JobDetailsDto>(entity);
+    }
+
+    [HttpPost]
+    [Authorize(Policy = "AdminOnly")]
+    public async Task<JobDetailsDto> AddJob([FromBody] string title)
+    {
+        var entity = await jobService.AddJobAsync(title);
+        return mapper.Map<JobDetailsDto>(entity);
+    }
+
+    [HttpDelete("{id:int}")]
+    [Authorize(Policy = "AdminOnly")]
+    public async Task<JobDetailsDto> DeleteJob(int id)
+    {
+        var entity = await jobService.RemoveJobAsync(id);
         return mapper.Map<JobDetailsDto>(entity);
     }
 }
