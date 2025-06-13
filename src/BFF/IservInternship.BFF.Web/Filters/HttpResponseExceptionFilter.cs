@@ -13,6 +13,11 @@ public class HttpResponseExceptionFilter : IExceptionFilter
             context.Result = new NotFoundObjectResult(new { error = context.Exception.Message });
             context.ExceptionHandled = true;
         }
+        if (context.Exception is DeleteConstraintException)
+        {
+            context.Result = new ConflictObjectResult(new { error = context.Exception.Message });
+            context.ExceptionHandled = true;
+        }
         // Optionally handle other exceptions
     }
 }

@@ -67,6 +67,9 @@ public class ApplicationService(ApplicationContext context)
         string aboutMe
         )
     {
+        if (!await context.Jobs.AnyAsync(x => x.Id == jobId))
+            throw new NotFoundException($"Job is not exist with Id = {jobId}");
+
         var entity = new ApplicationEntity
         {
             UserUid = userUid,
@@ -99,6 +102,9 @@ public class ApplicationService(ApplicationContext context)
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
             ?? throw new NotFoundException($"Application is not exist with Id = {id}");
+
+        if (!await context.Jobs.AnyAsync(x => x.Id == jobId))
+            throw new NotFoundException($"Job is not exist with Id = {jobId}");
 
         existingEntity.JobId = jobId;
         existingEntity.FirstName = firstName;

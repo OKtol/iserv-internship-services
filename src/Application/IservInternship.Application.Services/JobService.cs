@@ -2,6 +2,7 @@
 using IservInternship.Commons.Exceptions;
 using IservInternship.Domain.Application.Entities;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace IservInternship.Application.Services;
 
@@ -60,11 +61,17 @@ public class JobService(ApplicationContext context)
             .SingleOrDefaultAsync(x => x.Id == id)
             ?? throw new NotFoundException($"Job is not exist with Id = {id}");
 
-        await context.Jobs
-            .Where(x => x.Id == id)
-            .ExecuteDeleteAsync();
-
-        await context.SaveChangesAsync();
+        try
+        {
+            await context.Jobs
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+            await context.SaveChangesAsync();
+        } 
+        catch (Exception ex) when (ex is PostgresException || ex is DbUpdateException)
+        {
+            throw new DeleteConstraintException($"Job with Id = {id} cannot be deleted because it has related applications.");
+        }
         return existingEntity;
     }
 }
