@@ -1,4 +1,5 @@
-﻿using IservInternship.Domain.Application.Enums;
+﻿using IservInternship.Application.Services;
+using IservInternship.Domain.Application.Enums;
 
 namespace IservInternship.BFF.Web.Models;
 
@@ -27,4 +28,6 @@ public class ApplicationDetailsDto
     public string Answer { get; set; } = string.Empty;
 
     public Status SolutionStatus { get; set; }
+
+    public TestTaskDto TestTask { get; set; } = null!;
 }

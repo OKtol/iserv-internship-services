@@ -3,6 +3,7 @@ using IservInternship.Commons.Exceptions;
 using IservInternship.Domain.Application.Entities;
 using IservInternship.Domain.Application.Enums;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace IservInternship.Application.Services;
 
@@ -21,6 +22,13 @@ public class ApplicationService(ApplicationContext context)
             .Include(x => x.Job)
             .SingleOrDefaultAsync(x => x.Id == id)
             ?? throw new NotFoundException($"Application is not exist with Id = {id}");
+    }
+    public async Task<ApplicationEntity> GetApplicationByUserUidAsync(Guid userUid)
+    {
+        return await context.Applications
+            .Include(x => x.Job)
+            .SingleOrDefaultAsync(x => x.UserUid == userUid)
+            ?? throw new NotFoundException($"Application is not exist with userUid = {userUid}");
     }
 
     public async Task<ApplicationEntity> UpdateApplicationStatusAsync(Guid id, Status status)
@@ -49,14 +57,6 @@ public class ApplicationService(ApplicationContext context)
         return existingEntity;
     }
 
-    public async Task<ApplicationEntity> GetApplicationByUserUidAsync(Guid userUid)
-    {
-        return await context.Applications
-            .Include(x => x.Job)
-            .SingleOrDefaultAsync(x => x.UserUid == userUid)
-            ?? throw new NotFoundException($"Application is not exist with userUid = {userUid}");
-    }
-
     public async Task<ApplicationEntity> AddApplicationAsync(
         Guid userUid,
         string email,
@@ -65,10 +65,13 @@ public class ApplicationService(ApplicationContext context)
         string lastName,
         string phoneNumber,
         string aboutMe
-        )
+    )
     {
         if (!await context.Jobs.AnyAsync(x => x.Id == jobId))
             throw new NotFoundException($"Job is not exist with Id = {jobId}");
+
+        var testTask = TestTaskGenerator.GenerateTestTask();
+        var testTaskJsonString = testTask.TestTaskObject.ToJson();
 
         var entity = new ApplicationEntity
         {
@@ -78,7 +81,9 @@ public class ApplicationService(ApplicationContext context)
             FirstName = firstName,
             LastName = lastName,
             PhoneNumber = phoneNumber,
-            AboutMe = aboutMe
+            AboutMe = aboutMe,
+            TestTask = testTaskJsonString,
+            CorrectAnswer = testTask.Answer,
         };
         var entry = await context.Applications.AddAsync(entity);
         await context.SaveChangesAsync();
@@ -137,6 +142,10 @@ public class ApplicationService(ApplicationContext context)
             ?? throw new NotFoundException($"Application is not exist with Id = {id}");
 
         existingEntity.Answer = answer;
+
+        existingEntity.VerificationStatus = answer == existingEntity.CorrectAnswer
+            ? Status.Accepted
+            : Status.Denied;
 
         await context.SaveChangesAsync();
         return existingEntity;

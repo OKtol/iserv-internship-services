@@ -12,6 +12,8 @@ CREATE TABLE IF NOT EXISTS applications (
   verification_status integer NOT NULL,
   answer text NOT NULL,
   solution_status integer NOT NULL,
+  test_task text NOT NULL,
+  correct_answer text NOT NULL,
   CONSTRAINT "PK_applications" PRIMARY KEY (id),
   CONSTRAINT "FK_applications_jobs_job_id" FOREIGN KEY (job_id) REFERENCES jobs (id) ON DELETE RESTRICT
 );

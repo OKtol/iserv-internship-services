@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using IservInternship.Application.Services;
 using IservInternship.BFF.Web.Models;
 using IservInternship.Domain.Application.Entities;
+using System.Text.Json;
 
 namespace IservInternship.BFF.Web.Mappings;
 
@@ -21,6 +23,7 @@ public class ApplicationProfile : Profile
             .ForMember(d => d.VerificationStatus, opt => opt.MapFrom(s => s.VerificationStatus))
             .ForMember(d => d.Answer, opt => opt.MapFrom(s => s.Answer))
             .ForMember(d => d.SolutionStatus, opt => opt.MapFrom(s => s.SolutionStatus))
+            .ForMember(d => d.TestTask, opt => opt.MapFrom(s => TestTaskDto.FromJson(s.TestTask)))
             ;
 
         CreateMap<ApplicationEntity, ApplicationDto>()

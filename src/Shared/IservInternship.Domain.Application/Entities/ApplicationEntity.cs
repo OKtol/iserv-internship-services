@@ -30,5 +30,9 @@ public class ApplicationEntity
 
     public Status SolutionStatus { get; set; }
 
+    public string TestTask { get; set; } = string.Empty;
+
+    public string CorrectAnswer { get; set; } = string.Empty;
+
     public JobEntity Job { get; set; } = null!;
 }
