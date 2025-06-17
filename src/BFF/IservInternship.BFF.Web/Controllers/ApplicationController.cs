@@ -2,8 +2,6 @@
 using AutoMapper;
 using IservInternship.Application.Services;
 using IservInternship.BFF.Web.Models;
-using IservInternship.Commons.Exceptions;
-using IservInternship.Domain.Application.Entities;
 using IservInternship.Domain.Application.Enums;
 using IservInternship.Domain.Services;
 using Microsoft.AspNetCore.Authorization;

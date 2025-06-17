@@ -2,7 +2,6 @@
 using AutoMapper;
 using IservInternship.Application.Services;
 using IservInternship.BFF.Web.Models;
-using IservInternship.Domain.Application.Entities;
 using IservInternship.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

@@ -2,7 +2,6 @@
 using IservInternship.Application.Services;
 using IservInternship.BFF.Web.Models;
 using IservInternship.Domain.Application.Entities;
-using System.Text.Json;
 
 namespace IservInternship.BFF.Web.Mappings;
 
@@ -12,6 +11,7 @@ public class ApplicationProfile : Profile
     {
         CreateMap<ApplicationEntity, ApplicationDetailsDto>()
             .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
+            .ForMember(d => d.JobId, opt => opt.MapFrom(s => s.JobId))
             .ForMember(d => d.JobTitle, opt => opt.MapFrom(s => s.Job.Title))
             .ForMember(d => d.FirstName, opt => opt.MapFrom(s => s.FirstName))
             .ForMember(d => d.LastName, opt => opt.MapFrom(s => s.LastName))

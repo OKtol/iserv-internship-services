@@ -5,7 +5,9 @@ namespace IservInternship.BFF.Web.Models;
 
 public class ApplicationDetailsDto
 {
-    public Guid Id { get; set; }
+    public required Guid Id { get; set; }
+
+    public required int JobId { get; set; }
 
     public required string JobTitle { get; set; }
 
