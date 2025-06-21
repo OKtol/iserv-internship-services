@@ -6,7 +6,6 @@ WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-
 # This stage is used to build the service project
 FROM mcr.microsoft.com/dotnet/sdk:9.0-noble AS build
 ARG BUILD_CONFIGURATION=Release
@@ -34,5 +33,4 @@ RUN dotnet publish "BFF/IservInternship.BFF.Web/IservInternship.BFF.Web.csproj" 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-USER nobody
 ENTRYPOINT ["dotnet", "IservInternship.BFF.Web.dll"]
